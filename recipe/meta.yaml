@@ -1,5 +1,5 @@
 {% set name = "llama-index-legacy" %}
-{% set version = "0.9.48" %}
+{% set version = "0.9.48.post3" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/llama_index_legacy-{{ version }}.tar.gz
-    sha256: 82ddc4691edbf49533d65582c249ba22c03fe96fbd3e92f7758dccef28e43834
+    sha256: f6969f1085efb0abebd6367e46f3512020f3f6b9c086f458a519830dd61e8206
   # https://github.com/run-llama/llama_index/issues/10806
   - url: https://raw.githubusercontent.com/run-llama/llama_index/main/LICENSE
     sha256: 24f40b5190fdacabc24ddbb5f76364d15e4f030925220ea300d8a2dd4993c8cb
@@ -32,7 +32,7 @@ requirements:
     - fsspec >=2023.5.0
     - httpx
     - nest-asyncio >=1.5.8,<2.0.0
-    - nltk >=3.8.1,<4.0.0
+    - nltk >=3.8.1
     - numpy
     - openai >=1.1.0
     - pandas
