@@ -1,5 +1,5 @@
 {% set name = "llama-index-legacy" %}
-{% set version = "0.9.48.post3" %}
+{% set version = "0.9.48.post4" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/llama_index_legacy-{{ version }}.tar.gz
-    sha256: f6969f1085efb0abebd6367e46f3512020f3f6b9c086f458a519830dd61e8206
+    sha256: f8a9764e7e134a52bfef5e53d2d62561bfc01fc09874c51cc001df6f5302ae30
   # https://github.com/run-llama/llama_index/issues/10806
   - url: https://raw.githubusercontent.com/run-llama/llama_index/main/LICENSE
     sha256: 24f40b5190fdacabc24ddbb5f76364d15e4f030925220ea300d8a2dd4993c8cb
@@ -25,6 +25,7 @@ requirements:
     - poetry-core
     - pip
   run:
+    - typing_extensions >=4.5.0
     - python >=3.8.1,<4.0
     - sqlalchemy >=1.4.49
     - dataclasses-json
