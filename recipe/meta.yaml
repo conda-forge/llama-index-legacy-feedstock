@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/llama_index_legacy-{{ version }}.tar.gz
+  - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/llama_index_legacy-{{ version }}.tar.gz
     sha256: f8a9764e7e134a52bfef5e53d2d62561bfc01fc09874c51cc001df6f5302ae30
   # https://github.com/run-llama/llama_index/issues/10806
   - url: https://raw.githubusercontent.com/run-llama/llama_index/main/LICENSE
@@ -17,16 +17,16 @@ build:
     - llamaindex-legacy-cli = llama_index.legacy.command_line.command_line:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.8,<4.0
+    - python {{ python_min }}
     - poetry-core
     - pip
   run:
     - typing_extensions >=4.5.0
-    - python >=3.8.1,<4.0
+    - python >={{ python_min }},<4.0
     - sqlalchemy >=1.4.49
     - dataclasses-json
     - deprecated >=1.2.9.3
@@ -70,6 +70,7 @@ test:
     - llamaindex-legacy-cli --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://llamaindex.ai
