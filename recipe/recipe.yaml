@@ -1,32 +1,36 @@
-{% set name = "llama-index-legacy" %}
-{% set version = "0.9.48.post4" %}
+schema_version: 1
+
+context:
+  name: llama-index-legacy
+  version: 0.9.48.post4
 
 package:
-  name: {{ name|lower }}
-  version: {{ version }}
+  name: ${{ name|lower }}
+  version: ${{ version }}
 
 source:
-  - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/llama_index_legacy-{{ version }}.tar.gz
+  - url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/llama_index_legacy-${{ version }}.tar.gz
     sha256: f8a9764e7e134a52bfef5e53d2d62561bfc01fc09874c51cc001df6f5302ae30
   # https://github.com/run-llama/llama_index/issues/10806
   - url: https://raw.githubusercontent.com/run-llama/llama_index/main/LICENSE
     sha256: 24f40b5190fdacabc24ddbb5f76364d15e4f030925220ea300d8a2dd4993c8cb
 
 build:
-  entry_points:
-    - llamaindex-legacy-cli = llama_index.legacy.command_line.command_line:main
+  number: 2
   noarch: python
-  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 1
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  python:
+    entry_points:
+      - llamaindex-legacy-cli = llama_index.legacy.command_line.command_line:main
 
 requirements:
   host:
-    - python {{ python_min }}
+    - python ${{ python_min }}.*
     - poetry-core
     - pip
   run:
     - typing_extensions >=4.5.0
-    - python >={{ python_min }},<4.0
+    - python >=${{ python_min }},<4.0
     - sqlalchemy >=1.4.49
     - dataclasses-json
     - deprecated >=1.2.9.3
@@ -45,7 +49,7 @@ requirements:
     - aiohttp >=3.8.6,<4.0.0
     - networkx >=3.0
     - dirtyjson >=1.0.8,<2.0.0
-  run_constrained:
+  run_constraints:
     - beautifulsoup4 >=4.12.2,<5.0.0
     - langchain >=0.0.303
     - gradientai >=1.4.0
@@ -62,22 +66,25 @@ requirements:
     - spacy >=3.7.1,<4.0.0
     - psycopg2-binary >=2.9.9,<3.0.0
 
-test:
-  imports:
-    - llama_index.legacy
-  commands:
-    - pip check
-    - llamaindex-legacy-cli --help
-  requires:
-    - pip
-    - python {{ python_min }}
+tests:
+  - python:
+      imports:
+        - llama_index.legacy
+      python_version: ${{ python_min }}.*
+  - requirements:
+      run:
+        - pip
+        - python ${{ python_min }}.*
+    script:
+      - pip check
+      - llamaindex-legacy-cli --help
 
 about:
-  home: https://llamaindex.ai
-  dev_url: https://github.com/run-llama/llama_index/tree/main/llama-index-legacy
   summary: Interface between LLMs and your data
   license: MIT
   license_file: LICENSE
+  homepage: https://llamaindex.ai
+  repository: https://github.com/run-llama/llama_index/tree/main/llama-index-legacy
 
 extra:
   recipe-maintainers:
